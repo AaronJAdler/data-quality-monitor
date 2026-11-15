@@ -158,7 +158,7 @@ routing:
 | ruff lint and format, strict mypy | Locally (Linux, Python 3.12.13) |
 | 68 tests: each statistic against scipy; each monitor; baseline quarantine and adoption; alert lifecycle and routing; idempotent reruns; webhook retry with the same `Idempotency-Key`; the real outage and the real bad longitude; the backtest report matching a fresh run | Locally |
 | Backtest and replay on the 90 real partitions | Locally; the numbers above are copied from that output |
-| The same steps in GitHub Actions | See the CI badge. This README was written before the first CI run. |
+| The same steps in GitHub Actions (lint, types, 68 tests, backtest report unchanged, replay) | Passed on the first push, commit 5d610b8 (Ubuntu 24.04). The badge shows the current state. |
 | Webhook delivery | Against a mock transport only. No real endpoint was called. |
 | Windows | Not run. Nothing is platform-specific, but it was not tested there. |
 
