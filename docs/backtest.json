@@ -1,0 +1,1105 @@
+{
+  "dataset": "ca_fires_incidents",
+  "first_partition": "2021-07-15",
+  "last_partition": "2021-10-15",
+  "calendar_days": 93,
+  "partitions": 90,
+  "trial_days": 71,
+  "trials": 2198,
+  "seed": 20211015,
+  "history_findings": [
+    {
+      "date": "2021-07-16",
+      "severity": "info",
+      "finding": "schema/first_values/Injuries",
+      "observed": "first non-null values (number)",
+      "expected": "always null so far",
+      "detail": "a column that was always null now carries values"
+    },
+    {
+      "date": "2021-07-18",
+      "severity": "info",
+      "finding": "schema/first_values/StructuresDamaged",
+      "observed": "first non-null values (number)",
+      "expected": "always null so far",
+      "detail": "a column that was always null now carries values"
+    },
+    {
+      "date": "2021-07-20",
+      "severity": "warning",
+      "finding": "drift/out_of_range/Longitude",
+      "observed": "1 of 12 values, e.g. -1.18465e+07",
+      "expected": "between -122.648 and -116.625 (last 5 partitions)",
+      "detail": "more than 3 range-widths outside anything seen"
+    },
+    {
+      "date": "2021-08-02",
+      "severity": "info",
+      "finding": "schema/first_values/Extinguished",
+      "observed": "first non-null values (string)",
+      "expected": "always null so far",
+      "detail": "a column that was always null now carries values"
+    },
+    {
+      "date": "2021-08-04",
+      "severity": "warning",
+      "finding": "volume/row_count/-",
+      "observed": "19 rows",
+      "expected": "about 10 rows (median of the last 14 partitions)",
+      "detail": "+90% against the median, robust z = +3.0"
+    },
+    {
+      "date": "2021-08-06",
+      "severity": "info",
+      "finding": "schema/first_values/Injuries",
+      "observed": "first non-null values (number)",
+      "expected": "always null so far",
+      "detail": "a column that was always null now carries values"
+    },
+    {
+      "date": "2021-08-24",
+      "severity": "info",
+      "finding": "schema/first_values/AirTankers",
+      "observed": "first non-null values (number)",
+      "expected": "always null so far",
+      "detail": "a column that was always null now carries values"
+    },
+    {
+      "date": "2021-08-28",
+      "severity": "info",
+      "finding": "schema/first_values/Injuries",
+      "observed": "first non-null values (number)",
+      "expected": "always null so far",
+      "detail": "a column that was always null now carries values"
+    },
+    {
+      "date": "2021-10-03",
+      "severity": "warning",
+      "finding": "freshness/stale_events/-",
+      "observed": "newest event 2021-10-02T08:00:13.830000+00:00",
+      "expected": "later than 2021-10-02T08:00:13.830000+00:00",
+      "detail": "records changed, but no event is newer than the previous partition's"
+    },
+    {
+      "date": "2021-10-04",
+      "severity": "warning",
+      "finding": "freshness/missing_partition/-",
+      "observed": "no partition for 2021-10-04",
+      "expected": "one partition per day",
+      "detail": "1 day(s) in a row with no data"
+    },
+    {
+      "date": "2021-10-05",
+      "severity": "critical",
+      "finding": "freshness/missing_partition/-",
+      "observed": "no partition for 2021-10-05",
+      "expected": "one partition per day",
+      "detail": "2 day(s) in a row with no data"
+    },
+    {
+      "date": "2021-10-06",
+      "severity": "critical",
+      "finding": "freshness/missing_partition/-",
+      "observed": "no partition for 2021-10-06",
+      "expected": "one partition per day",
+      "detail": "3 day(s) in a row with no data"
+    },
+    {
+      "date": "2021-10-13",
+      "severity": "warning",
+      "finding": "freshness/stale_events/-",
+      "observed": "newest event 2021-10-12T15:38:39.363000+00:00",
+      "expected": "later than 2021-10-12T16:47:35.283000+00:00",
+      "detail": "records changed, but no event is newer than the previous partition's"
+    },
+    {
+      "date": "2021-10-15",
+      "severity": "warning",
+      "finding": "freshness/duplicate_partition/-",
+      "observed": "records identical to 2021-10-14",
+      "expected": "new or changed records",
+      "detail": "the file arrived but its content is a copy of the previous partition"
+    }
+  ],
+  "adopted": [],
+  "anomalies": [
+    {
+      "anomaly": "missing_partition",
+      "family": "Partition never arrives",
+      "description": "the day's file is absent",
+      "trials": 71,
+      "caught_by_expected_monitor": 71,
+      "caught_by_any_monitor": 71,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "redelivered_partition",
+      "family": "Yesterday's file delivered again",
+      "description": "the day's file is a copy of the previous day's",
+      "trials": 71,
+      "caught_by_expected_monitor": 71,
+      "caught_by_any_monitor": 71,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "drop_rows_30",
+      "family": "Rows lost",
+      "description": "30% of rows missing (truncated load)",
+      "trials": 71,
+      "caught_by_expected_monitor": 13,
+      "caught_by_any_monitor": 20,
+      "other_monitors": {
+        "freshness/stale_events/-": 7
+      }
+    },
+    {
+      "anomaly": "drop_rows_50",
+      "family": "Rows lost",
+      "description": "50% of rows missing (truncated load)",
+      "trials": 71,
+      "caught_by_expected_monitor": 38,
+      "caught_by_any_monitor": 44,
+      "other_monitors": {
+        "freshness/stale_events/-": 6
+      }
+    },
+    {
+      "anomaly": "drop_rows_80",
+      "family": "Rows lost",
+      "description": "80% of rows missing (truncated load)",
+      "trials": 71,
+      "caught_by_expected_monitor": 63,
+      "caught_by_any_monitor": 66,
+      "other_monitors": {
+        "freshness/stale_events/-": 2,
+        "nulls/null_rate/Extinguished": 1
+      }
+    },
+    {
+      "anomaly": "drop_rows_100",
+      "family": "Rows lost",
+      "description": "100% of rows missing (truncated load)",
+      "trials": 71,
+      "caught_by_expected_monitor": 71,
+      "caught_by_any_monitor": 71,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "duplicate_rows_50",
+      "family": "Rows duplicated",
+      "description": "50% of rows loaded twice",
+      "trials": 71,
+      "caught_by_expected_monitor": 33,
+      "caught_by_any_monitor": 34,
+      "other_monitors": {
+        "nulls/null_rate/Helicopters": 1
+      }
+    },
+    {
+      "anomaly": "duplicate_rows_100",
+      "family": "Rows duplicated",
+      "description": "100% of rows loaded twice",
+      "trials": 71,
+      "caught_by_expected_monitor": 67,
+      "caught_by_any_monitor": 71,
+      "other_monitors": {
+        "drift/distribution/AcresBurned": 4
+      }
+    },
+    {
+      "anomaly": "drop_column_PercentContained",
+      "family": "Column removed",
+      "description": "PercentContained no longer delivered",
+      "trials": 71,
+      "caught_by_expected_monitor": 71,
+      "caught_by_any_monitor": 71,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "drop_column_UniqueId",
+      "family": "Column removed",
+      "description": "UniqueId no longer delivered",
+      "trials": 71,
+      "caught_by_expected_monitor": 71,
+      "caught_by_any_monitor": 71,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "drop_column_Counties",
+      "family": "Column removed",
+      "description": "Counties no longer delivered",
+      "trials": 71,
+      "caught_by_expected_monitor": 71,
+      "caught_by_any_monitor": 71,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "rename_column_AcresBurned",
+      "family": "Column renamed",
+      "description": "AcresBurned delivered as Acres",
+      "trials": 71,
+      "caught_by_expected_monitor": 71,
+      "caught_by_any_monitor": 71,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "type_Latitude_to_string",
+      "family": "Type changed",
+      "description": "Latitude delivered as text",
+      "trials": 71,
+      "caught_by_expected_monitor": 71,
+      "caught_by_any_monitor": 71,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "type_Counties_to_string",
+      "family": "Type changed",
+      "description": "Counties delivered as one comma-separated string instead of a list",
+      "trials": 71,
+      "caught_by_expected_monitor": 71,
+      "caught_by_any_monitor": 71,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "type_Active_to_string",
+      "family": "Type changed",
+      "description": "Active delivered as \"true\"/\"false\" text",
+      "trials": 71,
+      "caught_by_expected_monitor": 71,
+      "caught_by_any_monitor": 71,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "null_Name_30",
+      "family": "Populated column goes null",
+      "description": "30% of Name values replaced with null",
+      "trials": 71,
+      "caught_by_expected_monitor": 71,
+      "caught_by_any_monitor": 71,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "null_Name_60",
+      "family": "Populated column goes null",
+      "description": "60% of Name values replaced with null",
+      "trials": 71,
+      "caught_by_expected_monitor": 71,
+      "caught_by_any_monitor": 71,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "null_Name_100",
+      "family": "Populated column goes null",
+      "description": "100% of Name values replaced with null",
+      "trials": 71,
+      "caught_by_expected_monitor": 71,
+      "caught_by_any_monitor": 71,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "null_Latitude_30",
+      "family": "Populated column goes null",
+      "description": "30% of Latitude values replaced with null",
+      "trials": 71,
+      "caught_by_expected_monitor": 71,
+      "caught_by_any_monitor": 71,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "null_Latitude_60",
+      "family": "Populated column goes null",
+      "description": "60% of Latitude values replaced with null",
+      "trials": 71,
+      "caught_by_expected_monitor": 71,
+      "caught_by_any_monitor": 71,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "null_Latitude_100",
+      "family": "Populated column goes null",
+      "description": "100% of Latitude values replaced with null",
+      "trials": 71,
+      "caught_by_expected_monitor": 71,
+      "caught_by_any_monitor": 71,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "zero_fill_AcresBurned",
+      "family": "Nulls replaced with 0",
+      "description": "every null in AcresBurned delivered as 0 (a default leaking through)",
+      "trials": 71,
+      "caught_by_expected_monitor": 71,
+      "caught_by_any_monitor": 71,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "zero_fill_PersonnelInvolved",
+      "family": "Nulls replaced with 0",
+      "description": "every null in PersonnelInvolved delivered as 0 (a default leaking through)",
+      "trials": 71,
+      "caught_by_expected_monitor": 71,
+      "caught_by_any_monitor": 71,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "swap_lat_lon",
+      "family": "Latitude and longitude swapped",
+      "description": "the two coordinate columns exchanged",
+      "trials": 71,
+      "caught_by_expected_monitor": 71,
+      "caught_by_any_monitor": 71,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "longitude_sign_lost",
+      "family": "Longitude sign lost",
+      "description": "Longitude delivered as a positive number",
+      "trials": 71,
+      "caught_by_expected_monitor": 71,
+      "caught_by_any_monitor": 71,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "one_bad_longitude",
+      "family": "One absurd coordinate",
+      "description": "one Longitude missing its decimal point (the real defect of 2021-07-20)",
+      "trials": 71,
+      "caught_by_expected_monitor": 71,
+      "caught_by_any_monitor": 71,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "shift_Latitude_0.5",
+      "family": "Latitude shifted",
+      "description": "every Latitude moved north by 0.5 degrees",
+      "trials": 71,
+      "caught_by_expected_monitor": 0,
+      "caught_by_any_monitor": 0,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "shift_Latitude_2",
+      "family": "Latitude shifted",
+      "description": "every Latitude moved north by 2 degrees",
+      "trials": 71,
+      "caught_by_expected_monitor": 40,
+      "caught_by_any_monitor": 40,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "scale_AcresBurned_hectares",
+      "family": "Unit change in AcresBurned",
+      "description": "AcresBurned multiplied by 0.4047 (acres reported as hectares)",
+      "trials": 70,
+      "caught_by_expected_monitor": 0,
+      "caught_by_any_monitor": 0,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "scale_AcresBurned_x10",
+      "family": "Unit change in AcresBurned",
+      "description": "AcresBurned multiplied by 10",
+      "trials": 70,
+      "caught_by_expected_monitor": 56,
+      "caught_by_any_monitor": 56,
+      "other_monitors": {}
+    },
+    {
+      "anomaly": "scale_AcresBurned_x1000",
+      "family": "Unit change in AcresBurned",
+      "description": "AcresBurned multiplied by 1000",
+      "trials": 70,
+      "caught_by_expected_monitor": 57,
+      "caught_by_any_monitor": 57,
+      "other_monitors": {}
+    }
+  ],
+  "volume_sweep": {
+    "tuning_end": "2021-08-31",
+    "rule": "at most 1 alert day on unmodified tuning data, then the highest mean catch rate on tuning data",
+    "rows": [
+      {
+        "min_mad_rows": 1.0,
+        "z_warning": 2.5,
+        "tuning": {
+          "alert_days": 14,
+          "days": 40,
+          "caught": {
+            "drop_rows_30": [
+              8,
+              33
+            ],
+            "drop_rows_50": [
+              13,
+              33
+            ],
+            "drop_rows_80": [
+              17,
+              33
+            ],
+            "drop_rows_100": [
+              19,
+              33
+            ],
+            "duplicate_rows_50": [
+              18,
+              33
+            ],
+            "duplicate_rows_100": [
+              19,
+              33
+            ]
+          }
+        },
+        "holdout": {
+          "alert_days": 4,
+          "days": 42,
+          "caught": {
+            "drop_rows_30": [
+              30,
+              42
+            ],
+            "drop_rows_50": [
+              38,
+              42
+            ],
+            "drop_rows_80": [
+              38,
+              42
+            ],
+            "drop_rows_100": [
+              38,
+              42
+            ],
+            "duplicate_rows_50": [
+              29,
+              42
+            ],
+            "duplicate_rows_100": [
+              38,
+              42
+            ]
+          }
+        }
+      },
+      {
+        "min_mad_rows": 1.0,
+        "z_warning": 3.5,
+        "tuning": {
+          "alert_days": 9,
+          "days": 40,
+          "caught": {
+            "drop_rows_30": [
+              4,
+              33
+            ],
+            "drop_rows_50": [
+              7,
+              33
+            ],
+            "drop_rows_80": [
+              19,
+              33
+            ],
+            "drop_rows_100": [
+              24,
+              33
+            ],
+            "duplicate_rows_50": [
+              13,
+              33
+            ],
+            "duplicate_rows_100": [
+              23,
+              33
+            ]
+          }
+        },
+        "holdout": {
+          "alert_days": 0,
+          "days": 42,
+          "caught": {
+            "drop_rows_30": [
+              12,
+              42
+            ],
+            "drop_rows_50": [
+              35,
+              42
+            ],
+            "drop_rows_80": [
+              41,
+              42
+            ],
+            "drop_rows_100": [
+              42,
+              42
+            ],
+            "duplicate_rows_50": [
+              12,
+              42
+            ],
+            "duplicate_rows_100": [
+              42,
+              42
+            ]
+          }
+        }
+      },
+      {
+        "min_mad_rows": 1.0,
+        "z_warning": 5.0,
+        "tuning": {
+          "alert_days": 1,
+          "days": 40,
+          "caught": {
+            "drop_rows_30": [
+              7,
+              33
+            ],
+            "drop_rows_50": [
+              8,
+              33
+            ],
+            "drop_rows_80": [
+              11,
+              33
+            ],
+            "drop_rows_100": [
+              32,
+              33
+            ],
+            "duplicate_rows_50": [
+              12,
+              33
+            ],
+            "duplicate_rows_100": [
+              24,
+              33
+            ]
+          }
+        },
+        "holdout": {
+          "alert_days": 0,
+          "days": 42,
+          "caught": {
+            "drop_rows_30": [
+              4,
+              42
+            ],
+            "drop_rows_50": [
+              15,
+              42
+            ],
+            "drop_rows_80": [
+              39,
+              42
+            ],
+            "drop_rows_100": [
+              42,
+              42
+            ],
+            "duplicate_rows_50": [
+              6,
+              42
+            ],
+            "duplicate_rows_100": [
+              35,
+              42
+            ]
+          }
+        }
+      },
+      {
+        "min_mad_rows": 2.0,
+        "z_warning": 2.5,
+        "tuning": {
+          "alert_days": 1,
+          "days": 40,
+          "caught": {
+            "drop_rows_30": [
+              7,
+              33
+            ],
+            "drop_rows_50": [
+              11,
+              33
+            ],
+            "drop_rows_80": [
+              24,
+              33
+            ],
+            "drop_rows_100": [
+              32,
+              33
+            ],
+            "duplicate_rows_50": [
+              23,
+              33
+            ],
+            "duplicate_rows_100": [
+              28,
+              33
+            ]
+          }
+        },
+        "holdout": {
+          "alert_days": 0,
+          "days": 42,
+          "caught": {
+            "drop_rows_30": [
+              6,
+              42
+            ],
+            "drop_rows_50": [
+              27,
+              42
+            ],
+            "drop_rows_80": [
+              42,
+              42
+            ],
+            "drop_rows_100": [
+              42,
+              42
+            ],
+            "duplicate_rows_50": [
+              10,
+              42
+            ],
+            "duplicate_rows_100": [
+              42,
+              42
+            ]
+          }
+        }
+      },
+      {
+        "min_mad_rows": 2.0,
+        "z_warning": 3.5,
+        "tuning": {
+          "alert_days": 0,
+          "days": 40,
+          "caught": {
+            "drop_rows_30": [
+              0,
+              33
+            ],
+            "drop_rows_50": [
+              7,
+              33
+            ],
+            "drop_rows_80": [
+              19,
+              33
+            ],
+            "drop_rows_100": [
+              33,
+              33
+            ],
+            "duplicate_rows_50": [
+              17,
+              33
+            ],
+            "duplicate_rows_100": [
+              26,
+              33
+            ]
+          }
+        },
+        "holdout": {
+          "alert_days": 0,
+          "days": 42,
+          "caught": {
+            "drop_rows_30": [
+              0,
+              42
+            ],
+            "drop_rows_50": [
+              5,
+              42
+            ],
+            "drop_rows_80": [
+              31,
+              42
+            ],
+            "drop_rows_100": [
+              42,
+              42
+            ],
+            "duplicate_rows_50": [
+              0,
+              42
+            ],
+            "duplicate_rows_100": [
+              30,
+              42
+            ]
+          }
+        }
+      },
+      {
+        "min_mad_rows": 2.0,
+        "z_warning": 5.0,
+        "tuning": {
+          "alert_days": 0,
+          "days": 40,
+          "caught": {
+            "drop_rows_30": [
+              0,
+              33
+            ],
+            "drop_rows_50": [
+              0,
+              33
+            ],
+            "drop_rows_80": [
+              8,
+              33
+            ],
+            "drop_rows_100": [
+              33,
+              33
+            ],
+            "duplicate_rows_50": [
+              4,
+              33
+            ],
+            "duplicate_rows_100": [
+              19,
+              33
+            ]
+          }
+        },
+        "holdout": {
+          "alert_days": 0,
+          "days": 42,
+          "caught": {
+            "drop_rows_30": [
+              0,
+              42
+            ],
+            "drop_rows_50": [
+              0,
+              42
+            ],
+            "drop_rows_80": [
+              11,
+              42
+            ],
+            "drop_rows_100": [
+              42,
+              42
+            ],
+            "duplicate_rows_50": [
+              0,
+              42
+            ],
+            "duplicate_rows_100": [
+              12,
+              42
+            ]
+          }
+        }
+      },
+      {
+        "min_mad_rows": 3.0,
+        "z_warning": 2.5,
+        "tuning": {
+          "alert_days": 0,
+          "days": 40,
+          "caught": {
+            "drop_rows_30": [
+              0,
+              33
+            ],
+            "drop_rows_50": [
+              7,
+              33
+            ],
+            "drop_rows_80": [
+              15,
+              33
+            ],
+            "drop_rows_100": [
+              33,
+              33
+            ],
+            "duplicate_rows_50": [
+              21,
+              33
+            ],
+            "duplicate_rows_100": [
+              24,
+              33
+            ]
+          }
+        },
+        "holdout": {
+          "alert_days": 0,
+          "days": 42,
+          "caught": {
+            "drop_rows_30": [
+              0,
+              42
+            ],
+            "drop_rows_50": [
+              4,
+              42
+            ],
+            "drop_rows_80": [
+              29,
+              42
+            ],
+            "drop_rows_100": [
+              42,
+              42
+            ],
+            "duplicate_rows_50": [
+              1,
+              42
+            ],
+            "duplicate_rows_100": [
+              21,
+              42
+            ]
+          }
+        }
+      },
+      {
+        "min_mad_rows": 3.0,
+        "z_warning": 3.5,
+        "tuning": {
+          "alert_days": 0,
+          "days": 40,
+          "caught": {
+            "drop_rows_30": [
+              0,
+              33
+            ],
+            "drop_rows_50": [
+              0,
+              33
+            ],
+            "drop_rows_80": [
+              7,
+              33
+            ],
+            "drop_rows_100": [
+              33,
+              33
+            ],
+            "duplicate_rows_50": [
+              2,
+              33
+            ],
+            "duplicate_rows_100": [
+              22,
+              33
+            ]
+          }
+        },
+        "holdout": {
+          "alert_days": 0,
+          "days": 42,
+          "caught": {
+            "drop_rows_30": [
+              0,
+              42
+            ],
+            "drop_rows_50": [
+              0,
+              42
+            ],
+            "drop_rows_80": [
+              6,
+              42
+            ],
+            "drop_rows_100": [
+              42,
+              42
+            ],
+            "duplicate_rows_50": [
+              0,
+              42
+            ],
+            "duplicate_rows_100": [
+              10,
+              42
+            ]
+          }
+        }
+      },
+      {
+        "min_mad_rows": 3.0,
+        "z_warning": 5.0,
+        "tuning": {
+          "alert_days": 0,
+          "days": 40,
+          "caught": {
+            "drop_rows_30": [
+              0,
+              33
+            ],
+            "drop_rows_50": [
+              0,
+              33
+            ],
+            "drop_rows_80": [
+              0,
+              33
+            ],
+            "drop_rows_100": [
+              33,
+              33
+            ],
+            "duplicate_rows_50": [
+              0,
+              33
+            ],
+            "duplicate_rows_100": [
+              11,
+              33
+            ]
+          }
+        },
+        "holdout": {
+          "alert_days": 0,
+          "days": 42,
+          "caught": {
+            "drop_rows_30": [
+              0,
+              42
+            ],
+            "drop_rows_50": [
+              0,
+              42
+            ],
+            "drop_rows_80": [
+              0,
+              42
+            ],
+            "drop_rows_100": [
+              42,
+              42
+            ],
+            "duplicate_rows_50": [
+              0,
+              42
+            ],
+            "duplicate_rows_100": [
+              1,
+              42
+            ]
+          }
+        }
+      }
+    ],
+    "selected": {
+      "min_mad_rows": 2.0,
+      "z_warning": 2.5
+    },
+    "configured": {
+      "min_mad_rows": 2.0,
+      "z_warning": 2.5
+    }
+  },
+  "drift_coverage": [
+    {
+      "column": "AcresBurned",
+      "median_values_per_day": 4,
+      "days_checked": 7,
+      "days": 75
+    },
+    {
+      "column": "AirTankers",
+      "median_values_per_day": 2,
+      "days_checked": 0,
+      "days": 75
+    },
+    {
+      "column": "ArchiveYear",
+      "median_values_per_day": 15,
+      "days_checked": 75,
+      "days": 75
+    },
+    {
+      "column": "CrewsInvolved",
+      "median_values_per_day": 3,
+      "days_checked": 0,
+      "days": 75
+    },
+    {
+      "column": "Dozers",
+      "median_values_per_day": 3,
+      "days_checked": 0,
+      "days": 75
+    },
+    {
+      "column": "Engines",
+      "median_values_per_day": 3,
+      "days_checked": 0,
+      "days": 75
+    },
+    {
+      "column": "Helicopters",
+      "median_values_per_day": 2,
+      "days_checked": 0,
+      "days": 75
+    },
+    {
+      "column": "Injuries",
+      "median_values_per_day": 1,
+      "days_checked": 0,
+      "days": 75
+    },
+    {
+      "column": "Latitude",
+      "median_values_per_day": 15,
+      "days_checked": 75,
+      "days": 75
+    },
+    {
+      "column": "Longitude",
+      "median_values_per_day": 15,
+      "days_checked": 75,
+      "days": 75
+    },
+    {
+      "column": "PercentContained",
+      "median_values_per_day": 4,
+      "days_checked": 7,
+      "days": 75
+    },
+    {
+      "column": "PersonnelInvolved",
+      "median_values_per_day": 3,
+      "days_checked": 0,
+      "days": 75
+    },
+    {
+      "column": "StructuresDamaged",
+      "median_values_per_day": 2,
+      "days_checked": 0,
+      "days": 75
+    },
+    {
+      "column": "StructuresDestroyed",
+      "median_values_per_day": 2,
+      "days_checked": 0,
+      "days": 75
+    },
+    {
+      "column": "StructuresThreatened",
+      "median_values_per_day": 2,
+      "days_checked": 0,
+      "days": 75
+    },
+    {
+      "column": "WaterTenders",
+      "median_values_per_day": 3,
+      "days_checked": 0,
+      "days": 75
+    }
+  ]
+}

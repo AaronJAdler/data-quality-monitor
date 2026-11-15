@@ -1,0 +1,31 @@
+# CAL FIRE's public incident feed, one partition per UTC day (real data; see data/README.md).
+dataset: ca_fires_incidents
+owner: fire-data
+
+source:
+  path: data/ca-fires-2021
+  records_key: incidents
+  arrived_at_key: source_committed_at
+  event_time_column: Updated
+
+# Every monitor runs with the defaults in src/dqmon/config.py except the volume monitor. Its two
+# settings were selected from the tuning period of the backtest by a fixed rule, then scored on
+# the holdout period: see docs/backtest.md section 3 and docs/adr/0003.
+monitors:
+  volume:
+    min_mad_rows: 2
+    z_warning: 2.5
+
+routing:
+  renotify_after_days: 3
+  channels:
+    pager: {type: webhook, url_env: DQMON_PAGER_URL}
+    owners: {type: file, path: out/owners.jsonl}
+    digest: {type: file, path: out/digest.jsonl}
+  routes:
+    - match: {severity: [critical]}
+      channels: [pager, owners]
+    - match: {severity: [warning]}
+      channels: [owners]
+    - match: {severity: [info]}
+      channels: [digest]
